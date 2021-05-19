@@ -1,0 +1,60 @@
+﻿@page "/"
+@inject ICotizacionService CotizacionService
+
+<h1>Cotizaciones</h1>
+
+<p>Esta pagina muestra la lista de cotizaciones</p>
+@Message
+
+<div>
+    <a href="/DetallesCotizacion"><i>Agregar Nueva Cotizacion</i></a>
+</div>
+
+@if (cotizaciones == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Elaboró:</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cotizacion in cotizaciones)
+            {
+            <tr>
+                <td>@cotizacion.Titulo</td>
+                <td>@cotizacion.Autor</td>
+                <th><a href="/DetallesCotizacion/@cotizacion.CotizacionId"><i>Editar</i></a></th>
+                <th><a href="/CotizacionDelete/@cotizacion.CotizacionId"><i>Borrar</i></a></th>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    public IEnumerable<Cotizacion> cotizaciones { get; set; }
+    public string Message { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            cotizaciones = await CotizacionService.GetAllCotizacion();
+        }
+        catch (Exception e)
+        {
+
+            Message = e.Message; 
+        }
+
+    }
+}

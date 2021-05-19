@@ -1,0 +1,52 @@
+﻿@page "/CotizacionDelete/{cotizacionId:int}"
+@inject ICotizacionService  CotizacionService
+@inject NavigationManager NavigationManager
+
+
+<h1>Cotizacion Delete</h1>
+<p style="color:red;text-align:center">Esta seguro que desea eleminar esta cotización?</p>
+
+<EditForm Model="@cotizacion">
+<table class="table">
+    <tr>
+        <td>Titulo:</td>
+        <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Titulo" /></td>
+    </tr>
+    <tr>
+        <td>Creado Por:</td>
+        <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Autor" /></td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align:center">
+            <input type="submit" value="Borrar" @onclick="DeleteCotizacion" />
+            <input type="button" value="Cancel" @onclick="Cancel" />
+        </td>
+    </tr>
+</table>
+</EditForm>
+
+
+@code {
+
+    [Parameter]
+    public int cotizacionId { get; set; }
+
+    private Cotizacion cotizacion = new Cotizacion();
+
+    protected override async Task OnInitializedAsync()
+    {
+        cotizacion = await CotizacionService.GetCotizacionDetails(cotizacionId);
+    }
+
+    protected async Task DeleteCotizacion()
+    {
+        await CotizacionService.DeleteCotizacion(cotizacionId);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
