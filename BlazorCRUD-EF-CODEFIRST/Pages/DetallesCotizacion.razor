@@ -19,6 +19,48 @@
             <td>Creado Por:</td>
             <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Autor" /></td>
         </tr>
+        <tr>
+            <td>Fecha de Captura</td>
+            <td><input type="date" @bind="cotizacion.FechaCaptura" /></td>
+        </tr>
+        <tr>
+            <td>Tiempo de Entrega</td>
+            <td><input class="form-control col-sm-4" type="number" @bind="cotizacion.TiempoEntrega" /></td>
+        </tr>
+        <tr>
+            <td>Moneda</td>
+            <td>
+                <select name="Moneda" id="Moneda" @bind="cotizacion.Moneda">
+                    <optgroup label="Pesos Mexicanos">
+                        <option value="MXP">Pesos</option>
+                    </optgroup>
+                    <optgroup label="Dolar Americano">
+                        <option value="USD">Dolares</option>
+                    </optgroup>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Terminos de Pago</td>
+            <td>
+                <select name="Terminos de pago" id="Terminos de pago" @bind="cotizacion.TerminosPago">
+                    <optgroup label="Contado">
+                        <option value="Pago de Contado">Pago de Contado</option>
+                    </optgroup>
+                    <optgroup label="Pago Credito">
+                        <option value="Pago Credito 15 días">Pago Credito</option>
+                    </optgroup>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Vigencia</td>
+            <td><input class="form-control col-sm-4" type="date" @bind="cotizacion.Vigencia" /></td>
+        </tr>
+
+
+
+
 
 
 
