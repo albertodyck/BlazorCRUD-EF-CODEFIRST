@@ -4,14 +4,16 @@ using BlazorCRUD_EF_CODEFIRST.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorCRUD_EF_CODEFIRST.Migrations
 {
     [DbContext(typeof(CotizacionDbContext))]
-    partial class CotizacionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210519071025_ProductoCliente")]
+    partial class ProductoCliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

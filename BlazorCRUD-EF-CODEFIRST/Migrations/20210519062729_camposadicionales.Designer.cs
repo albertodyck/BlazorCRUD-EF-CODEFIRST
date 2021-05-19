@@ -4,55 +4,22 @@ using BlazorCRUD_EF_CODEFIRST.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorCRUD_EF_CODEFIRST.Migrations
 {
     [DbContext(typeof(CotizacionDbContext))]
-    partial class CotizacionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210519062729_camposadicionales")]
+    partial class camposadicionales
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Entities.Cliente", b =>
-                {
-                    b.Property<int>("ClienteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Contacto")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CotizacionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CotizacionId1")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("NombreCliente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TelefonoContacto")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.HasKey("ClienteId");
-
-                    b.HasIndex("CotizacionId1");
-
-                    b.ToTable("Clientes");
-                });
 
             modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Entities.Comentario", b =>
                 {
@@ -75,38 +42,6 @@ namespace BlazorCRUD_EF_CODEFIRST.Migrations
                     b.ToTable("Comentarios");
                 });
 
-            modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Entities.Producto", b =>
-                {
-                    b.Property<int>("ProductoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CotizacionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("PrecioUnitario")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SKU")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalFila")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ProductoId");
-
-                    b.HasIndex("CotizacionId");
-
-                    b.ToTable("Productos");
-                });
-
             modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Models.Cotizacion", b =>
                 {
                     b.Property<int>("CotizacionId")
@@ -116,9 +51,6 @@ namespace BlazorCRUD_EF_CODEFIRST.Migrations
 
                     b.Property<string>("Autor")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("FechaCaptura")
                         .HasColumnType("datetime");
@@ -152,15 +84,6 @@ namespace BlazorCRUD_EF_CODEFIRST.Migrations
                     b.ToTable("Cotizaciones");
                 });
 
-            modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Entities.Cliente", b =>
-                {
-                    b.HasOne("BlazorCRUD_EF_CODEFIRST.Models.Cotizacion", "Cotizacion")
-                        .WithMany()
-                        .HasForeignKey("CotizacionId1");
-
-                    b.Navigation("Cotizacion");
-                });
-
             modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Entities.Comentario", b =>
                 {
                     b.HasOne("BlazorCRUD_EF_CODEFIRST.Models.Cotizacion", "Cotizacion")
@@ -172,20 +95,9 @@ namespace BlazorCRUD_EF_CODEFIRST.Migrations
                     b.Navigation("Cotizacion");
                 });
 
-            modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Entities.Producto", b =>
-                {
-                    b.HasOne("BlazorCRUD_EF_CODEFIRST.Models.Cotizacion", null)
-                        .WithMany("Productos")
-                        .HasForeignKey("CotizacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Models.Cotizacion", b =>
                 {
                     b.Navigation("Comentarios");
-
-                    b.Navigation("Productos");
                 });
 #pragma warning restore 612, 618
         }

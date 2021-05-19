@@ -1,4 +1,5 @@
-﻿using BlazorCRUD_EF_CODEFIRST.Models;
+﻿using BlazorCRUD_EF_CODEFIRST.Entities;
+using BlazorCRUD_EF_CODEFIRST.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,13 @@ namespace BlazorCRUD_EF_CODEFIRST.Context
 
         //creamos la tabla Cotizaciones con la entidad cotizacion
         public DbSet<Cotizacion> Cotizaciones{ get; set; }
+
+        public DbSet<Comentario> Comentarios { get; set; }
+
+        public DbSet<Cliente> Clientes { get; set; }
+
+        public DbSet<Producto> Productos { get; set; }
+
 
 
     }
