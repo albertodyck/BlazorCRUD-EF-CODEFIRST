@@ -23,10 +23,5 @@ namespace BlazorCRUD_EF_CODEFIRST.Entities
         [StringLength(maximumLength: 20), Column(TypeName = "varchar(20)")]
         public string TelefonoContacto { get; set; }
 
-        public int CotizacionId { get; set; }
-
-        public Cotizacion Cotizacion { get; set; }
-
-
     }
 }

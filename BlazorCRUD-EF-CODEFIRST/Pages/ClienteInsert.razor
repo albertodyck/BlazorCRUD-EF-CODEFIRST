@@ -1,0 +1,57 @@
+﻿@page "/DetallesCliente/{clienteId:int}"
+@page "/DetallesCliente"
+
+@inject IClienteService ClienteService
+@inject NavigationManager NavigationManager
+
+<h1>ClienteInsert</h1>
+
+<EditForm Model="@cliente">
+    <table class="table">
+        <tr>
+            <td>Nombre/Razon Social</td>
+            <td><input class="form-control col-sm-4" type="text" @bind="cliente.NombreCliente" /></td>
+        </tr>
+        <tr>
+            <td>Contacto</td>
+            <td><input class="form-control col-sm-4" type="text" @bind="cliente.Contacto" /></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="email" @bind="cliente.Email" /></td>
+        </tr>
+        <tr>
+            <td>Telefono Contacto</td>
+            <td><input class="form-control col-sm-4" type="tel" @bind="cliente.TelefonoContacto" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Save" @onclick="SaveCliente" />
+                <input type="button" value="Cancel" @onclick="Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+
+@code {
+
+    public string Message { get; set; }
+
+    [Parameter]
+    public int clienteId { get; set; }
+
+    private Cliente cliente = new Cliente();
+
+    protected async Task SaveCliente()
+    {
+        await ClienteService.SaveCliente(cliente);
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+}

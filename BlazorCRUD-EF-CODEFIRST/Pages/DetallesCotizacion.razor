@@ -4,16 +4,71 @@
 
 
 @inject ICotizacionService CotizacionService
+@inject IClienteService ClienteService
+
 
 @inject NavigationManager NavigationManager
 
 <h1>Detalles Cotizacion</h1>
+
+<div>
+    <button class="btn-primary" @onclick="ShowPopUp">Seleccionar Cliente</button>
+</div>
+
+
+
+    @if (popup)
+    {
+        <div class="modal" tabindex="-1" style="display:block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Seleccionar Cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="ClosePopUp"></button>
+                    </div>
+                    <div class="modal-body">
+                        <EditForm Model="@cliente">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Numero de Cliente</th>
+                                        <th>Nombre/Razon Social</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cliente in clientes)
+                                    {
+                                        <tr>
+                                            <td>@cliente.ClienteId</td>
+                                            <td>@cliente.NombreCliente</td>
+                                            <th><a @onclick="(()=>Seleccionar(cliente))"><i>Seleccionar</i></a></th>
+                                            <th><a @onclick="ClosePopUp"><i>Borrar</i></a></th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </EditForm>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="ClosePopUp">Close</button>
+                        <button type="button" class="btn btn-primary" @onclick="(()=>Seleccionar(cliente))">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
 <EditForm Model="@cotizacion">
     <table class="table">
         <tr>
             <td>Titulo:</td>
             <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Titulo" /></td>
+        </tr>
+        <tr>
+            <td>Cliente<button class="btn-primary" @onclick="ShowPopUp">Seleccionar</button></td>
+            <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.ClienteId" /></td>
         </tr>
         <tr>
             <td>Creado Por:</td>
@@ -74,16 +129,57 @@
 </EditForm>
 
 @code {
+
+    #region popUp Cliente
+
+    bool popup = false;
+
+    void ShowPopUp()
+    {
+        popup = true;
+    }
+
+    void ClosePopUp()
+    {
+        popup = false;
+    }
+
+    #endregion
+
+    public string Message { get; set; }
+
+    [Parameter]
+    public int clienteId { get; set; }
+
+    private Cliente cliente = new Cliente();
+
+    public IEnumerable<Cliente> clientes { get; set; }
+
+    [Parameter]
+    public int productoId { get; set; }
+
+    private Producto producto = new Producto();
+
     [Parameter]
     public int cotizacionId { get; set; }
 
     private Cotizacion cotizacion = new Cotizacion();
+
 
     protected override async Task OnInitializedAsync()
     {
         if (cotizacionId != 0)
         {
             cotizacion = await CotizacionService.GetCotizacionDetails(cotizacionId);
+        }
+        try
+        {
+            clientes = await ClienteService.GetAllCliente();
+        }
+        catch (Exception e)
+        {
+
+            Message = e.Message;
         }
     }
 
@@ -97,4 +193,30 @@
     {
         NavigationManager.NavigateTo("/");
     }
+
+    #region Funciones Cliente
+
+    protected async Task Seleccionar(Cliente cliente)
+    {
+        cotizacion.ClienteId = cliente.ClienteId;
+
+        await CotizacionService.SaveCotizacion(cotizacion);
+
+        ClosePopUp();
+    }
+    //protected async Task GetAllCliente()
+    //{
+    //    try
+    //    {
+    //        clientes = await ClienteService.GetAllCliente();
+    //    }
+    //    catch (Exception e)
+    //    {
+
+    //        Message = e.Message;
+    //    }
+
+    //}
+
+    #endregion
 }

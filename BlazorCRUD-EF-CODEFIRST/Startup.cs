@@ -1,5 +1,6 @@
 using BlazorCRUD_EF_CODEFIRST.Context;
 using BlazorCRUD_EF_CODEFIRST.Data;
+using BlazorCRUD_EF_CODEFIRST.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 
 
 
@@ -45,6 +45,8 @@ namespace BlazorCRUD_EF_CODEFIRST
             services.AddDbContext<CotizacionDbContext>();
 
             services.AddScoped<ICotizacionService, CotizacionService>();
+
+            services.AddScoped<IClienteService, ClienteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
