@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inject ICotizacionService CotizacionService
 
-<h1>Cotizaciones</h1>
+<h1 class="text-primary">Cotizaciones</h1>
 
 <p>Esta pagina muestra la lista de cotizaciones</p>
 @Message
@@ -16,7 +16,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Titulo</th>
@@ -37,8 +37,8 @@ else
                 <td>@cotizacion.FechaCaptura</td>
                 <td>@cotizacion.Vigencia</td>
                 <td>@cotizacion.Total</td>
-                <th><a href="/DetallesCotizacion/@cotizacion.CotizacionId"><i>Editar</i></a></th>
-                <th><a href="/CotizacionDelete/@cotizacion.CotizacionId"><i>Borrar</i></a></th>
+                <th><a href="/DetallesCotizacion/@cotizacion.CotizacionId" class="btn btn-success"><i>Editar</i></a></th>
+                <th><a href="/CotizacionDelete/@cotizacion.CotizacionId" class="btn btn-warning"><i>Borrar</i></a></th>
             </tr>
             }
         </tbody>
