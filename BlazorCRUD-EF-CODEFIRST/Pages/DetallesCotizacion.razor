@@ -43,8 +43,8 @@
                                         <tr>
                                             <td>@cliente.ClienteId</td>
                                             <td>@cliente.NombreCliente</td>
-                                            <th><a @onclick="(()=>Seleccionar(cliente))"><i>Seleccionar</i></a></th>
-                                            <th><a @onclick="ClosePopUp"><i>Borrar</i></a></th>
+                                            <th><a class="badge badge-primary" @onclick="(()=>Seleccionar(cliente))">Seleccionar</a></th>
+                                            <th><a class="badge badge-danger" @onclick="ClosePopUp"><i>Borrar</i></a></th>
                                         </tr>
                                     }
                                 </tbody>
