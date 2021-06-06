@@ -4,7 +4,7 @@
 @inject IClienteService ClienteService
 @inject NavigationManager NavigationManager
 
-<h1>ClienteInsert</h1>
+<h1 class="text-primary">ClienteInsert</h1>
 
 <EditForm Model="@cliente">
     <table class="table">
@@ -26,8 +26,8 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align:center">
-                <input type="submit" value="Save" @onclick="SaveCliente" />
-                <input type="button" value="Cancel" @onclick="Cancel" />
+                <input type="submit" value="Save" class="btn btn-outline-success" @onclick="SaveCliente" />
+                <input type="button" value="Cancel" class="btn btn-info" @onclick="Cancel" />
             </td>
         </tr>
     </table>

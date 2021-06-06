@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 
 
-<h1>Cotizacion Delete</h1>
+<h1 class="text-primary">Borrado de Cotizacion</h1>
 <p style="color:red;text-align:center">Esta seguro que desea eleminar esta cotización?</p>
 
 <EditForm Model="@cotizacion">
@@ -18,8 +18,8 @@
     </tr>
     <tr>
         <td colspan="2" style="text-align:center">
-            <input type="submit" value="Borrar" @onclick="DeleteCotizacion" />
-            <input type="button" value="Cancel" @onclick="Cancel" />
+            <input type="submit" value="Borrar" class="btn btn-warning" @onclick="DeleteCotizacion" />
+            <input type="button" value="Cancel" class="btn btn-secondary" @onclick="Cancel" />
         </td>
     </tr>
 </table>

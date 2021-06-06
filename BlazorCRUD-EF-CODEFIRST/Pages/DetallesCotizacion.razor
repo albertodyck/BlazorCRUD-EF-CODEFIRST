@@ -9,7 +9,7 @@
 
 @inject NavigationManager NavigationManager
 
-<h1>Detalles Cotizacion</h1>
+<h1 class="text-primary">Detalles Cotizacion</h1>
 
 <div>
     <button class="btn-primary" @onclick="ShowPopUp">Seleccionar Cliente</button>
@@ -52,7 +52,7 @@
                         </EditForm>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="ClosePopUp">Close</button>
+                        <button type="button" class="btn btn-info" data-bs-dismiss="modal" @onclick="ClosePopUp">Close</button>
                         <button type="button" class="btn btn-primary" @onclick="(()=>Seleccionar(cliente))">Save changes</button>
                     </div>
                 </div>
@@ -121,8 +121,8 @@
 
         <tr>
             <td colspan="2" style="text-align:center">
-                <input type="submit" value="Save" @onclick="SaveCotizacion" />
-                <input type="button" value="Cancel" @onclick="Cancel" />
+                <input type="submit" value="Save" class="btn btn-primary" @onclick="SaveCotizacion" />
+                <input type="button" value="Cancel" class="btn btn-info" @onclick="Cancel" />
             </td>
         </tr>
     </table>
