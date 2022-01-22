@@ -23,6 +23,7 @@ namespace BlazorCRUD_EF_CODEFIRST
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -35,6 +36,11 @@ namespace BlazorCRUD_EF_CODEFIRST
             services.AddDbContext<CotizacionDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlConnectionString"));
             });
+
+            //using (var client = new CotizacionDbContext())
+            //{
+            //    client.Database.EnsureCreated();
+            //}
 
             //services.AddControllers().AddNewtonsoftJson(options => 
             //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -52,6 +58,14 @@ namespace BlazorCRUD_EF_CODEFIRST
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //Si la base de datos no existe se creara
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<CotizacionDbContext>();
+                context.Database.Migrate();
+            }
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

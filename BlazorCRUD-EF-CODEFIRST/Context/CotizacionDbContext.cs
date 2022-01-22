@@ -10,6 +10,10 @@ namespace BlazorCRUD_EF_CODEFIRST.Context
 {
     public class CotizacionDbContext : DbContext
     {
+        public CotizacionDbContext()
+        {
+        }
+
         //recibimos las opciones al generar la clase, eliminamos dependencias
         public CotizacionDbContext(DbContextOptions options) : base(options)
         {
