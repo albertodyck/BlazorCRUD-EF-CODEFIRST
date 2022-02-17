@@ -1,5 +1,6 @@
 ﻿@page "/AgregarProducto"
-@page "/AgregarProducto/{productoId:int}"
+
+@page "/AgregarProducto/{CotizacionId:int}"
 
 @inject IProductoService ProductoService
 @inject ICotizacionService CotizacionService
@@ -12,7 +13,7 @@
     <table class="table">
         <tr>
             <td>Cantidad</td>
-            <td><input class="form-control col-sm-4" type="text" @bind="producto.Cantidad" /></td>
+            <td><input class="form-control col-sm-4" type="number" @bind="producto.Cantidad" /></td>
         </tr>
         <tr>
             <td>Descripción</td>
@@ -20,15 +21,15 @@
         </tr>
         <tr>
             <td>SKU</td>
-            <td><input class="form-control col-sm-4" type="text" @bind="producto.SKU" /></td>
+            <td><input class="form-control col-sm-4" type="number" @bind="producto.SKU" /></td>
         </tr>
         <tr>
             <td>Precio Unitario</td>
-            <td><input class="form-control col-sm-4" type="text" @bind="producto.PrecioUnitario" /></td>
+            <td><input class="form-control col-sm-4" type="number" @bind="producto.PrecioUnitario" /></td>
         </tr>
         <tr>
             <td>SubTotal</td>
-            <td><input class="form-control col-sm-4" type="text" @bind=subtotal /></td>
+            <td><input class="form-control col-sm-4" type="number" @bind=producto.TotalFila /></td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:center">
@@ -52,6 +53,12 @@
     [Parameter]
     public int productoId { get; set; }
 
+    //private Cotizacion cotizacion = new Cotizacion();
+
+    [Parameter]
+    public int cotizacionId { get; set; }
+
+
     protected void Calcular()
     {
         decimal cantidad = producto.Cantidad;
@@ -62,6 +69,7 @@
 
     protected async Task SaveProducto()
     {
+        producto.CotizacionId = cotizacionId;
         await ProductoService.SaveProducto(producto);
         NavigationManager.NavigateTo("/");
     }

@@ -50,6 +50,7 @@ else
     public IEnumerable<Cotizacion> cotizaciones { get; set; }
     public string Message { get; set; }
 
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -59,7 +60,7 @@ else
         catch (Exception e)
         {
 
-            Message = e.Message; 
+            Message = e.Message;
         }
 
     }
