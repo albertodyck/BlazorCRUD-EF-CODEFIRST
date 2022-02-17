@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>BlazorCRUD_EF_CODEFIRST</RootNamespace>
+    <UserSecretsId>1f0befba-4f21-41f4-a23e-e2dd0e9a6ca6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

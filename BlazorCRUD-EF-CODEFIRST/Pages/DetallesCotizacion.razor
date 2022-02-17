@@ -5,60 +5,61 @@
 
 @inject ICotizacionService CotizacionService
 @inject IClienteService ClienteService
+@inject IProductoService ProductoService
 
 
 @inject NavigationManager NavigationManager
 
 <h1 class="text-primary">Detalles Cotizacion</h1>
 
-<div>
-    <button class="btn-primary" @onclick="ShowPopUp">Seleccionar Cliente</button>
-</div>
+@*<div>
+        <button class="btn-primary" @onclick="ShowPopUp">Seleccionar Cliente</button>
+    </div>*@
 
 
 
-    @if (popup)
-    {
-        <div class="modal" tabindex="-1" style="display:block">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Seleccionar Cliente</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="ClosePopUp"></button>
-                    </div>
-                    <div class="modal-body">
-                        <EditForm Model="@cliente">
-                            <table class="table">
-                                <thead>
+@if (popup)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Seleccionar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="ClosePopUp"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="@cliente">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Numero de Cliente</th>
+                                    <th>Nombre/Razon Social</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cliente in clientes)
+                                {
                                     <tr>
-                                        <th>Numero de Cliente</th>
-                                        <th>Nombre/Razon Social</th>
-                                        <th></th>
-                                        <th></th>
+                                        <td>@cliente.ClienteId</td>
+                                        <td>@cliente.NombreCliente</td>
+                                        <th><a class="badge badge-primary" @onclick="(()=>Seleccionar(cliente))">Seleccionar</a></th>
+                                        <th><a class="badge badge-danger" @onclick="ClosePopUp"><i>Borrar</i></a></th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var cliente in clientes)
-                                    {
-                                        <tr>
-                                            <td>@cliente.ClienteId</td>
-                                            <td>@cliente.NombreCliente</td>
-                                            <th><a class="badge badge-primary" @onclick="(()=>Seleccionar(cliente))">Seleccionar</a></th>
-                                            <th><a class="badge badge-danger" @onclick="ClosePopUp"><i>Borrar</i></a></th>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </EditForm>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-bs-dismiss="modal" @onclick="ClosePopUp">Close</button>
-                        <button type="button" class="btn btn-primary" @onclick="(()=>Seleccionar(cliente))">Save changes</button>
-                    </div>
+                                }
+                            </tbody>
+                        </table>
+                    </EditForm>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal" @onclick="ClosePopUp">Close</button>
+                    <button type="button" class="btn btn-primary" @onclick="(()=>Seleccionar(cliente))">Save changes</button>
                 </div>
             </div>
         </div>
-    }
+    </div>
+}
 
 <EditForm Model="@cotizacion">
     <table class="table">
@@ -67,8 +68,12 @@
             <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Titulo" /></td>
         </tr>
         <tr>
-            <td>Cliente<button class="btn-primary" @onclick="ShowPopUp">Seleccionar</button></td>
+            <td>Cliente</td>
             <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.ClienteId" /></td>
+        </tr>
+        <tr>
+            <td><button class="btn-primary" @onclick="ShowPopUp">Seleccionar</button></td>
+            <td><input class="form-control col-sm-4" type="text" @bind="NombreCliente" /></td>
         </tr>
         <tr>
             <td>Creado Por:</td>
@@ -112,13 +117,6 @@
             <td>Vigencia</td>
             <td><input class="form-control col-sm-4" type="date" @bind="cotizacion.Vigencia" /></td>
         </tr>
-
-
-
-
-
-
-
         <tr>
             <td colspan="2" style="text-align:center">
                 <input type="submit" value="Save" class="btn btn-primary" @onclick="SaveCotizacion" />
@@ -127,6 +125,42 @@
         </tr>
     </table>
 </EditForm>
+
+<div>
+    <a href="/AgregarProducto"><i>Agregar Nuevo Producto a la Cotización</i></a>
+</div>
+
+@if (productos == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Cantidad</th>
+                <th>Descripción:</th>
+                <th>SKU</th>
+                <th>Precio Unitario</th>
+                <th>Total Fila</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in cotizacion.Productos)
+            {
+                <tr>
+                    <td>@producto.Cantidad</td>
+                    <td>@producto.Descripcion</td>
+                    <td>@producto.SKU</td>
+                    <td>@producto.PrecioUnitario</td>
+                    <td>@producto.TotalFila</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 
 @code {
 
@@ -151,6 +185,9 @@
     [Parameter]
     public int clienteId { get; set; }
 
+    [Parameter]
+    public string NombreCliente { get; set; }
+
     private Cliente cliente = new Cliente();
 
     public IEnumerable<Cliente> clientes { get; set; }
@@ -159,6 +196,8 @@
     public int productoId { get; set; }
 
     private Producto producto = new Producto();
+
+    public IEnumerable<Producto> productos { get; set; }
 
     [Parameter]
     public int cotizacionId { get; set; }
@@ -175,6 +214,7 @@
         try
         {
             clientes = await ClienteService.GetAllCliente();
+            productos = await ProductoService.GetAllProductos();
         }
         catch (Exception e)
         {
@@ -185,6 +225,7 @@
 
     protected async Task SaveCotizacion()
     {
+
         await CotizacionService.SaveCotizacion(cotizacion);
         NavigationManager.NavigateTo("/");
     }
@@ -200,23 +241,13 @@
     {
         cotizacion.ClienteId = cliente.ClienteId;
 
+        NombreCliente = cliente.NombreCliente;
+
         await CotizacionService.SaveCotizacion(cotizacion);
 
         ClosePopUp();
     }
-    //protected async Task GetAllCliente()
-    //{
-    //    try
-    //    {
-    //        clientes = await ClienteService.GetAllCliente();
-    //    }
-    //    catch (Exception e)
-    //    {
 
-    //        Message = e.Message;
-    //    }
-
-    //}
 
     #endregion
 

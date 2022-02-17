@@ -53,6 +53,8 @@ namespace BlazorCRUD_EF_CODEFIRST
             services.AddScoped<ICotizacionService, CotizacionService>();
 
             services.AddScoped<IClienteService, ClienteService>();
+
+            services.AddScoped<IProductoService, ProductoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

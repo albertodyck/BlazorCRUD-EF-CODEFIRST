@@ -37,9 +37,9 @@ namespace BlazorCRUD_EF_CODEFIRST.Models
 
         public int ClienteId { get; set; }
 
-        public List<Producto> Productos { get; set; }
+        public ICollection<Producto> Productos { get; set; }
 
-        public List<Comentario> Comentarios { get; set; }
+        public ICollection<Comentario> Comentarios { get; set; }
 
     }
 }

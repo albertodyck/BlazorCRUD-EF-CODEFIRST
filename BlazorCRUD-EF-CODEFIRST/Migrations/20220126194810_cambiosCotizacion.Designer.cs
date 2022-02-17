@@ -4,14 +4,16 @@ using BlazorCRUD_EF_CODEFIRST.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorCRUD_EF_CODEFIRST.Migrations
 {
     [DbContext(typeof(CotizacionDbContext))]
-    partial class CotizacionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220126194810_cambiosCotizacion")]
+    partial class cambiosCotizacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,8 +143,6 @@ namespace BlazorCRUD_EF_CODEFIRST.Migrations
 
                     b.HasKey("CotizacionId");
 
-                    b.HasIndex("ClienteId");
-
                     b.ToTable("Cotizaciones");
                 });
 
@@ -164,20 +164,6 @@ namespace BlazorCRUD_EF_CODEFIRST.Migrations
                         .HasForeignKey("CotizacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Models.Cotizacion", b =>
-                {
-                    b.HasOne("BlazorCRUD_EF_CODEFIRST.Entities.Cliente", null)
-                        .WithMany("Cotizaciones")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Entities.Cliente", b =>
-                {
-                    b.Navigation("Cotizaciones");
                 });
 
             modelBuilder.Entity("BlazorCRUD_EF_CODEFIRST.Models.Cotizacion", b =>
