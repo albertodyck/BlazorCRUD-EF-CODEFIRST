@@ -130,7 +130,7 @@
     <a href="/AgregarProducto/@cotizacion.CotizacionId "><i>Agregar Nuevo Producto a la Cotización</i></a>
 </div>
 
-@if (productos == null)
+@if (cotizacion.Productos == null)
 {
     <p><em>Cargando...</em></p>
 }
@@ -144,18 +144,20 @@ else
                 <th>SKU</th>
                 <th>Precio Unitario</th>
                 <th>Total Fila</th>
+                <th>Acción</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var producto in cotizacion.Productos)
             {
-                <tr>
-                    <td>@producto.Cantidad</td>
-                    <td>@producto.Descripcion</td>
-                    <td>@producto.SKU</td>
-                    <td>@producto.PrecioUnitario</td>
-                    <td>@producto.TotalFila</td>
-                </tr>
+            <tr>
+                <td>@producto.Cantidad</td>
+                <td>@producto.Descripcion</td>
+                <td>@producto.SKU</td>
+                <td>@producto.PrecioUnitario</td>
+                <td>@producto.TotalFila</td>
+                <td><a href="/ProductoDelete/@producto.ProductoId" class="btn btn-warning"><i>Borrar</i></a></td>
+            </tr>
             }
         </tbody>
     </table>
@@ -215,6 +217,7 @@ else
         {
             clientes = await ClienteService.GetAllCliente();
             productos = await ProductoService.GetAllProductos();
+
         }
         catch (Exception e)
         {

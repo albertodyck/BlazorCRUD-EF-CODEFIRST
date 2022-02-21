@@ -1,0 +1,53 @@
+﻿@page "/ProductoDelete/{productoId:int}"
+@inject IProductoService  ProductoService
+@inject NavigationManager NavigationManager
+
+
+<h1 class="text-primary">Borrado de Producto</h1>
+<p class="alert alert-danger" role="alert" text-align:center">Esta seguro que desea eleminar esta producto?</p>
+
+<EditForm Model="@producto">
+    <table class="table">
+        <tr>
+            <td>Descripción:</td>
+            <td><input class="form-control col-sm-4" type="text" @bind="producto.Descripcion" /></td>
+        </tr>
+        <tr>
+            <td>En la cotizacion numero:</td>
+            <td><input class="form-control col-sm-4" type="text" @bind="producto.CotizacionId" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Borrar" class="btn btn-danger" @onclick="DeleteProducto" />
+                <input type="button" value="Cancel" class="btn btn-info" @onclick="Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+
+@code {
+
+    [Parameter]
+    public int productoId { get; set; }
+
+    private Producto producto = new Producto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        producto = await ProductoService.GetProductoDetails(productoId);
+    }
+
+    protected async Task DeleteProducto()
+    {
+        await ProductoService.DeleteProducto(productoId);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
+

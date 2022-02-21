@@ -53,7 +53,6 @@
     [Parameter]
     public int productoId { get; set; }
 
-    //private Cotizacion cotizacion = new Cotizacion();
 
     [Parameter]
     public int cotizacionId { get; set; }
@@ -71,12 +70,12 @@
     {
         producto.CotizacionId = cotizacionId;
         await ProductoService.SaveProducto(producto);
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/DetallesCotizacion/" + cotizacionId);
     }
 
     protected void Cancel()
     {
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/DetallesCotizacion/" + cotizacionId);
     }
 
 }
