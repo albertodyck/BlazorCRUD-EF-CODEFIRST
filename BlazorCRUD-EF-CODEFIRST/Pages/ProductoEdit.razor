@@ -1,0 +1,96 @@
+﻿@page "/ProductoEdit/{ProductoId:int}"
+
+@inject IProductoService ProductoService
+@inject ICotizacionService CotizacionService
+
+@inject NavigationManager NavigationManager
+
+<h1 class="text-primary">Editar Producto</h1>
+
+<EditForm Model="@producto">
+    <table class="table">
+        <tr>
+            <td>Cantidad</td>
+            <td><input class="form-control col-sm-4" type="number" @bind="producto.Cantidad" /></td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td><input class="form-control col-sm-4" type="text" @bind="producto.Descripcion" /></td>
+        </tr>
+        <tr>
+            <td>SKU</td>
+            <td><input class="form-control col-sm-4" type="number" @bind="producto.SKU" /></td>
+        </tr>
+        <tr>
+            <td>Precio Unitario</td>
+            <td><input class="form-control col-sm-4" type="number" @bind="producto.PrecioUnitario" /></td>
+        </tr>
+        <tr>
+            <td>SubTotal</td>
+            <td><input class="form-control col-sm-4" type="number" @bind=producto.TotalFila /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Save" class="btn btn-outline-success" @onclick="SaveProducto" />
+                <input type="button" value="Cancel" class="btn btn-info" @onclick="Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+
+@code {
+
+    private Producto producto = new Producto();
+
+    public string Message { get; set; }
+
+    [Parameter]
+    public decimal subtotal { get; set; }
+
+    [Parameter]
+    public int productoId { get; set; }
+
+
+    [Parameter]
+    public int cotizacionId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (productoId != 0)
+        {
+            try
+            {
+                producto = await ProductoService.GetProductoDetails(productoId);
+            }
+            catch (Exception e)
+            {
+                Message = e.Message;
+            }
+        }
+    }
+
+
+    protected void Calcular()
+    {
+        decimal cantidad = producto.Cantidad;
+        decimal precioUnitario = producto.PrecioUnitario;
+        subtotal = cantidad * precioUnitario;
+
+    }
+
+    protected async Task SaveProducto()
+    {
+        cotizacionId = producto.CotizacionId;
+        await ProductoService.SaveProducto(producto);
+        NavigationManager.NavigateTo("/DetallesCotizacion/" + cotizacionId);
+    }
+
+    protected void Cancel()
+    {
+        cotizacionId = producto.CotizacionId;
+        NavigationManager.NavigateTo("/DetallesCotizacion/" + cotizacionId);
+    }
+
+}
+
