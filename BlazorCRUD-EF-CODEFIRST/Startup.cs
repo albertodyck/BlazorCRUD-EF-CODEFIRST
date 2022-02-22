@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Components.Authorization;
 using BlazorCRUD_EF_CODEFIRST.Context;
 using BlazorCRUD_EF_CODEFIRST.Data;
 using BlazorCRUD_EF_CODEFIRST.Entities;
@@ -37,6 +40,9 @@ namespace BlazorCRUD_EF_CODEFIRST
                 options.UseSqlServer(Configuration.GetConnectionString("SqlConnectionString"));
             });
 
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<CotizacionDbContext>();
             //using (var client = new CotizacionDbContext())
             //{
             //    client.Database.EnsureCreated();
@@ -84,8 +90,12 @@ namespace BlazorCRUD_EF_CODEFIRST
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

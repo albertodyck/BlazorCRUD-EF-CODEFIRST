@@ -2,6 +2,8 @@
 @page "/DetallesCotizacion/{cotizacionId:int}"
 @*nos permite acceder a los metodos del servicio en el codigo*@
 
+@attribute [Authorize]
+
 
 @inject ICotizacionService CotizacionService
 @inject IClienteService ClienteService
@@ -151,15 +153,15 @@ else
         <tbody>
             @foreach (var producto in cotizacion.Productos)
             {
-            <tr>
-                <td>@producto.Cantidad</td>
-                <td>@producto.Descripcion</td>
-                <td>@producto.SKU</td>
-                <td>@producto.PrecioUnitario</td>
-                <td>@producto.TotalFila</td>
-                <td><a href="/ProductoEdit/@producto.ProductoId" class="btn btn-success"><i>Editar</i></a></td>
-                <td><a href="/ProductoDelete/@producto.ProductoId" class="btn btn-warning"><i>Borrar</i></a></td>
-            </tr>
+                <tr>
+                    <td>@producto.Cantidad</td>
+                    <td>@producto.Descripcion</td>
+                    <td>@producto.SKU</td>
+                    <td>@producto.PrecioUnitario</td>
+                    <td>@producto.TotalFila</td>
+                    <td><a href="/ProductoEdit/@producto.ProductoId" class="btn btn-success"><i>Editar</i></a></td>
+                    <td><a href="/ProductoDelete/@producto.ProductoId" class="btn btn-warning"><i>Borrar</i></a></td>
+                </tr>
             }
         </tbody>
     </table>
@@ -261,3 +263,5 @@ else
 
     #endregion
 }
+
+

@@ -2,6 +2,8 @@
 @inject IProductoService  ProductoService
 @inject NavigationManager NavigationManager
 
+@attribute [Authorize]
+
 
 <h1 class="text-primary">Borrado de Producto</h1>
 <p class="alert alert-danger" role="alert" text-align:center">Esta seguro que desea eleminar esta producto?</p>
@@ -50,4 +52,6 @@
         NavigationManager.NavigateTo("/");
     }
 }
+
+
 

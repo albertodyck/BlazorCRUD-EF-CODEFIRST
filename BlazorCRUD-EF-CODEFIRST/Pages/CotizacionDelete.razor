@@ -1,28 +1,32 @@
 ﻿@page "/CotizacionDelete/{cotizacionId:int}"
+
+@attribute [Authorize]
+
 @inject ICotizacionService  CotizacionService
 @inject NavigationManager NavigationManager
+
 
 
 <h1 class="text-primary">Borrado de Cotizacion</h1>
 <p class="alert alert-danger" role="alert" text-align:center">Esta seguro que desea eleminar esta cotización?</p>
 
 <EditForm Model="@cotizacion">
-<table class="table">
-    <tr>
-        <td>Titulo:</td>
-        <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Titulo" /></td>
-    </tr>
-    <tr>
-        <td>Creado Por:</td>
-        <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Autor" /></td>
-    </tr>
-    <tr>
-        <td colspan="2" style="text-align:center">
-            <input type="submit" value="Borrar" class="btn btn-danger" @onclick="DeleteCotizacion" />
-            <input type="button" value="Cancel" class="btn btn-info" @onclick="Cancel" />
-        </td>
-    </tr>
-</table>
+    <table class="table">
+        <tr>
+            <td>Titulo:</td>
+            <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Titulo" /></td>
+        </tr>
+        <tr>
+            <td>Creado Por:</td>
+            <td><input class="form-control col-sm-4" type="text" @bind="cotizacion.Autor" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Borrar" class="btn btn-danger" @onclick="DeleteCotizacion" />
+                <input type="button" value="Cancel" class="btn btn-info" @onclick="Cancel" />
+            </td>
+        </tr>
+    </table>
 </EditForm>
 
 
@@ -50,3 +54,4 @@
         NavigationManager.NavigateTo("/");
     }
 }
+

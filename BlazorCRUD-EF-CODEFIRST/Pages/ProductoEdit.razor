@@ -3,6 +3,8 @@
 @inject IProductoService ProductoService
 @inject ICotizacionService CotizacionService
 
+@attribute [Authorize]
+
 @inject NavigationManager NavigationManager
 
 <h1 class="text-primary">Editar Producto</h1>
@@ -93,4 +95,6 @@
     }
 
 }
+
+
 

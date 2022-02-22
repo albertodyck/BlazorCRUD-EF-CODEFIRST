@@ -1,5 +1,6 @@
 ﻿using BlazorCRUD_EF_CODEFIRST.Entities;
 using BlazorCRUD_EF_CODEFIRST.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace BlazorCRUD_EF_CODEFIRST.Context
 {
-    public class CotizacionDbContext : DbContext
+    public class CotizacionDbContext : IdentityDbContext
     {
         public CotizacionDbContext()
         {
         }
 
         //recibimos las opciones al generar la clase, eliminamos dependencias
-        public CotizacionDbContext(DbContextOptions options) : base(options)
+        public CotizacionDbContext(DbContextOptions<CotizacionDbContext> options) : base(options)
         {
 
         }

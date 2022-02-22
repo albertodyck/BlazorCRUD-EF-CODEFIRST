@@ -1,67 +1,83 @@
 ﻿@page "/"
+
+@attribute [Authorize]
+
+
 @inject ICotizacionService CotizacionService
 
-<h1 class="text-primary">Cotizaciones</h1>
+    <AuthorizeView>
+        <Authorized>
 
-<p>Esta pagina muestra la lista de cotizaciones</p>
-@Message
+            <h1 class="text-primary">Cotizaciones</h1>
 
-<div>
-    <a href="/DetallesCotizacion"><i>Agregar Nueva Cotizacion</i></a>
-</div>
+            <p>Esta pagina muestra la lista de cotizaciones</p>
+            @Message
 
-@if (cotizaciones == null)
-{
-    <p><em>Cargando...</em></p>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Titulo</th>
-                <th>Elaboró:</th>
-                <th>Fecha de Captura</th>
-                <th>Vigencia</th>
-                <th>Total</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var cotizacion in cotizaciones)
+            <div>
+                <a href="/DetallesCotizacion"><i>Agregar Nueva Cotizacion</i></a>
+            </div>
+
+            @if (cotizaciones == null)
             {
-            <tr>
-                <td>@cotizacion.Titulo</td>
-                <td>@cotizacion.Autor</td>
-                <td>@cotizacion.FechaCaptura</td>
-                <td>@cotizacion.Vigencia</td>
-                <td>@cotizacion.Total</td>
-                <th><a href="/DetallesCotizacion/@cotizacion.CotizacionId" class="btn btn-success"><i>Editar</i></a></th>
-                <th><a href="/CotizacionDelete/@cotizacion.CotizacionId" class="btn btn-warning"><i>Borrar</i></a></th>
-            </tr>
+                <p><em>Cargando...</em></p>
             }
-        </tbody>
-    </table>
-}
+            else
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Elaboró:</th>
+                            <th>Fecha de Captura</th>
+                            <th>Vigencia</th>
+                            <th>Total</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cotizacion in cotizaciones)
+                        {
+                            <tr>
+                                <td>@cotizacion.Titulo</td>
+                                <td>@cotizacion.Autor</td>
+                                <td>@cotizacion.FechaCaptura</td>
+                                <td>@cotizacion.Vigencia</td>
+                                <td>@cotizacion.Total</td>
+                                <th><a href="/DetallesCotizacion/@cotizacion.CotizacionId" class="btn btn-success"><i>Editar</i></a></th>
+                                <th><a href="/CotizacionDelete/@cotizacion.CotizacionId" class="btn btn-warning"><i>Borrar</i></a></th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            @code {
+                public IEnumerable<Cotizacion> cotizaciones { get; set; }
+                public string Message { get; set; }
 
 
-@code {
-    public IEnumerable<Cotizacion> cotizaciones { get; set; }
-    public string Message { get; set; }
+                protected override async Task OnInitializedAsync()
+                {
+                    try
+                    {
+                        cotizaciones = await CotizacionService.GetAllCotizacion();
+                    }
+                    catch (Exception e)
+                    {
+
+                        Message = e.Message;
+                    }
+
+                }
+            }
+
+        </Authorized>
+        <NotAuthorized>
+            <h2>Por favor inicie sesion para utilizar el sistema</h2>
 
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            cotizaciones = await CotizacionService.GetAllCotizacion();
-        }
-        catch (Exception e)
-        {
+        </NotAuthorized>
+    </AuthorizeView>
 
-            Message = e.Message;
-        }
 
-    }
-}
