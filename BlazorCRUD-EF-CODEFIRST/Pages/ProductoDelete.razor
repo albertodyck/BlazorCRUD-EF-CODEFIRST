@@ -1,5 +1,7 @@
 ﻿@page "/ProductoDelete/{productoId:int}"
 @inject IProductoService  ProductoService
+@inject ICotizacionService CotizacionService
+
 @inject NavigationManager NavigationManager
 
 @attribute [Authorize]
@@ -33,17 +35,41 @@
     [Parameter]
     public int productoId { get; set; }
 
+    [Parameter]
+    public int cotizacionId { get; set; }
+
     private Producto producto = new Producto();
+
+    private Cotizacion cotizacion = new Cotizacion();
+
+    decimal IVAeliminado;
 
     protected override async Task OnInitializedAsync()
     {
         producto = await ProductoService.GetProductoDetails(productoId);
+
+        cotizacionId = producto.CotizacionId;
+
+        cotizacion = await CotizacionService.GetCotizacionDetails(cotizacionId);
+    }
+
+    protected async Task CalcularTotal()
+    {
+        cotizacion.SubTotal = cotizacion.SubTotal - producto.TotalFila;
+
+        //IVAeliminado = producto.TotalFila * 16 / 100;
+        //cotizacion.IVA = cotizacion.IVA - IVAeliminado;
+        cotizacion.IVA = cotizacion.SubTotal * 16 / 100;
+
+        cotizacion.Total = cotizacion.SubTotal + cotizacion.IVA;
+
+        await CotizacionService.SaveCotizacion(cotizacion);
     }
 
     protected async Task DeleteProducto()
     {
         await ProductoService.DeleteProducto(productoId);
-
+        await CalcularTotal();
         NavigationManager.NavigateTo("/");
     }
 

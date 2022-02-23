@@ -28,10 +28,6 @@
             <td><input class="form-control col-sm-4" type="number" @bind="producto.PrecioUnitario" /></td>
         </tr>
         <tr>
-            <td>SubTotal</td>
-            <td><input class="form-control col-sm-4" type="number" @bind=producto.TotalFila /></td>
-        </tr>
-        <tr>
             <td colspan="2" style="text-align:center">
                 <input type="submit" value="Save" class="btn btn-outline-success" @onclick="SaveProducto" />
                 <input type="button" value="Cancel" class="btn btn-info" @onclick="Cancel" />
@@ -44,6 +40,8 @@
 @code {
 
     private Producto producto = new Producto();
+
+    private Cotizacion cotizacion = new Cotizacion();
 
     public string Message { get; set; }
 
@@ -64,6 +62,10 @@
             try
             {
                 producto = await ProductoService.GetProductoDetails(productoId);
+
+                cotizacionId = producto.CotizacionId;
+
+                cotizacion = await CotizacionService.GetCotizacionDetails(cotizacionId);
             }
             catch (Exception e)
             {
@@ -73,18 +75,37 @@
     }
 
 
-    protected void Calcular()
+    protected void CalcularTotalFila()
     {
-        decimal cantidad = producto.Cantidad;
-        decimal precioUnitario = producto.PrecioUnitario;
-        subtotal = cantidad * precioUnitario;
+        producto.TotalFila = producto.Cantidad * producto.PrecioUnitario;
+    }
 
+    protected async Task ReducirTotal()
+    {
+        cotizacion.SubTotal = cotizacion.SubTotal - producto.TotalFila;
+        cotizacion.IVA = cotizacion.SubTotal * 16 / 100;
+        cotizacion.Total = cotizacion.SubTotal + cotizacion.IVA;
+
+        await CotizacionService.SaveCotizacion(cotizacion);
+    }
+
+    protected async Task CalcularTotal()
+    {
+
+        cotizacion.SubTotal = producto.TotalFila + cotizacion.SubTotal;
+        cotizacion.IVA = cotizacion.SubTotal * 16 / 100;
+        cotizacion.Total = cotizacion.SubTotal + cotizacion.IVA;
+
+        await CotizacionService.SaveCotizacion(cotizacion);
     }
 
     protected async Task SaveProducto()
     {
+        await ReducirTotal();
+        CalcularTotalFila();
         cotizacionId = producto.CotizacionId;
         await ProductoService.SaveProducto(producto);
+        await CalcularTotal();
         NavigationManager.NavigateTo("/DetallesCotizacion/" + cotizacionId);
     }
 

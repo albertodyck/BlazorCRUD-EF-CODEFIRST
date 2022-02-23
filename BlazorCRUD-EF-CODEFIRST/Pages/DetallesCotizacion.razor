@@ -14,11 +14,6 @@
 
 <h1 class="text-primary">Detalles Cotizacion</h1>
 
-@*<div>
-        <button class="btn-primary" @onclick="ShowPopUp">Seleccionar Cliente</button>
-    </div>*@
-
-
 
 @if (popup)
 {
@@ -46,8 +41,8 @@
                                     <tr>
                                         <td>@cliente.ClienteId</td>
                                         <td>@cliente.NombreCliente</td>
-                                        <th><a class="badge badge-primary" @onclick="(()=>Seleccionar(cliente))">Seleccionar</a></th>
-                                        <th><a class="badge badge-danger" @onclick="ClosePopUp"><i>Borrar</i></a></th>
+                                        <th><a class="btn btn-light" @onclick="(()=>Seleccionar(cliente))">Seleccionar</a></th>
+                                        <th><a class="btn btn-danger" @onclick="ClosePopUp"><i>Borrar</i></a></th>
                                     </tr>
                                 }
                             </tbody>
@@ -145,9 +140,9 @@ else
                 <th>Descripción:</th>
                 <th>SKU</th>
                 <th>Precio Unitario</th>
-                <th>Total Fila</th>
-                <th>Editar</th>
-                <th>Borrar</th>
+                <th>Sub Total</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -216,10 +211,13 @@ else
         if (cotizacionId != 0)
         {
             cotizacion = await CotizacionService.GetCotizacionDetails(cotizacionId);
+            cliente = await ClienteService.GetClienteDetails(cotizacion.ClienteId);
+            NombreCliente = cliente.NombreCliente;
         }
         try
         {
             clientes = await ClienteService.GetAllCliente();
+
             productos = await ProductoService.GetAllProductos();
 
         }

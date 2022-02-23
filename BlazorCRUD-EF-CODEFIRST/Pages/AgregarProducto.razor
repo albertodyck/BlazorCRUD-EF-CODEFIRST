@@ -32,10 +32,6 @@
             <td><input class="form-control col-sm-4" type="number" @bind="producto.PrecioUnitario" /></td>
         </tr>
         <tr>
-            <td>SubTotal</td>
-            <td><input class="form-control col-sm-4" type="number" @bind=producto.TotalFila /></td>
-        </tr>
-        <tr>
             <td colspan="2" style="text-align:center">
                 <input type="submit" value="Save" class="btn btn-outline-success" @onclick="SaveProducto" />
                 <input type="button" value="Cancel" class="btn btn-info" @onclick="Cancel" />
@@ -50,6 +46,8 @@
 
     private Producto producto = new Producto();
 
+    private Cotizacion cotizacion = new Cotizacion();
+
     public string Message { get; set; }
 
     [Parameter]
@@ -63,18 +61,29 @@
     public int cotizacionId { get; set; }
 
 
-    protected void Calcular()
+    protected void CalcularTotalFila()
     {
-        decimal cantidad = producto.Cantidad;
-        decimal precioUnitario = producto.PrecioUnitario;
-        subtotal = cantidad * precioUnitario;
+        producto.TotalFila = producto.Cantidad * producto.PrecioUnitario;
+        //subtotal = Convert.ToDecimal(producto.Cantidad) * Convert.ToDecimal(producto.PrecioUnitario);
+        //producto.TotalFila = subtotal;
+    }
 
+    protected async Task CalcularTotal()
+    {
+        cotizacion = await CotizacionService.GetCotizacionDetails(cotizacionId);
+        cotizacion.SubTotal = producto.TotalFila + cotizacion.SubTotal;
+        cotizacion.IVA = cotizacion.SubTotal * 16 / 100;
+        cotizacion.Total = cotizacion.SubTotal + cotizacion.IVA;
+
+        await CotizacionService.SaveCotizacion(cotizacion);
     }
 
     protected async Task SaveProducto()
     {
+        CalcularTotalFila();
         producto.CotizacionId = cotizacionId;
         await ProductoService.SaveProducto(producto);
+        await CalcularTotal();
         NavigationManager.NavigateTo("/DetallesCotizacion/" + cotizacionId);
     }
 
