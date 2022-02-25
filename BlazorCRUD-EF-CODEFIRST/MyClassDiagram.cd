@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BlazorCRUD_EF_CODEFIRST.Entities.Cliente">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAIAABAAAAAABAAAAAAAAAAAAEAAEAA=</HashCode>
+      <FileName>Entities\Cliente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlazorCRUD_EF_CODEFIRST.Entities.Comentario">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAABAAAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Entities\Comentario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlazorCRUD_EF_CODEFIRST.Models.Cotizacion">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACgAAAQABAAAAAAgQBAAIEAAAAAAQAAAAAgAAAAAABA=</HashCode>
+      <FileName>Entities\Cotizacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlazorCRUD_EF_CODEFIRST.Entities.Producto">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAEAAAAAAAAABAAAAAABAAAAQCAAAAAAEAAAAAA=</HashCode>
+      <FileName>Entities\Producto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlazorCRUD_EF_CODEFIRST.Data.ClienteService">
+    <Position X="8.5" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QgAAAACAAAAABAAAAAAAAAAAICAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Data\ClienteService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BlazorCRUD_EF_CODEFIRST.Data.CotizacionService">
+    <Position X="11" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAEAKACAABAAAAAAAAAgA=</HashCode>
+      <FileName>Data\CotizacionService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BlazorCRUD_EF_CODEFIRST.Data.ProductoService">
+    <Position X="4" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAgAAAEBgEAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\ProductoService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BlazorCRUD_EF_CODEFIRST.Context.CotizacionDbContext">
+    <Position X="1.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAEAABAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Context\CotizacionDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="BlazorCRUD_EF_CODEFIRST.Data.IClienteService">
+    <Position X="6.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAAAACAAAAAAAAAAAAAAAAAICAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Data\IClienteService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BlazorCRUD_EF_CODEFIRST.Data.ICotizacionService">
+    <Position X="13.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAKACAABAAAAAAAAAgA=</HashCode>
+      <FileName>Data\ICotizacionService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BlazorCRUD_EF_CODEFIRST.Data.IProductoService">
+    <Position X="6.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAgAAAEAgEAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\IProductoService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
